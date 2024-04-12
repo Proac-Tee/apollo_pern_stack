@@ -3,6 +3,7 @@ interface User {
   id: string; // Unique identifier for the user
   email: string; // Email address of the user
   username: string; // Username of the user
+  password: String;
   role: Role; // Role of the user
   posts?: Post[]; // Posts written by the user (optional)
 }
@@ -14,6 +15,7 @@ interface Post {
   createdAt: string; // Date and time when the post was created (formatted as string)
   updatedAt: string; // Date and time when the post was last updated (formatted as string)
   author: User; // Author of the post
+  username: string;
 }
 
 // Define the Role enum
@@ -25,8 +27,12 @@ enum Role {
 
 export const resolvers = {
   Query: {
-    user: async (_parent: User, args: { id: string }, { dataSources }: any) => {
-      return dataSources.prismaDataSource.getSingleUser(args.id); // Example function to fetch users
+    user: async (
+      _parent: User,
+      args: { email: string },
+      { dataSources }: any
+    ) => {
+      return dataSources.prismaDataSource.getSingleUser(args.email); // Example function to fetch users
     },
     users: async (_parent: User, _args: unknown, { dataSources }: any) => {
       return dataSources.prismaDataSource.getAllUsers(); // Example function to fetch users
@@ -67,7 +73,11 @@ export const resolvers = {
 
     addUser: async (
       _parent: User,
-      args: { username: string; email: string; posts: string },
+      args: {
+        email: string;
+        password: string;
+        posts: string[];
+      },
       { dataSources }: any
     ) => {
       // Call the function to create a single user with the destructured args
@@ -76,7 +86,7 @@ export const resolvers = {
 
     addPost: async (
       _parent: Post,
-      args: { title: string; authorId: string },
+      args: { title: string; authorId: string; username: string },
       { dataSources }: any
     ) => {
       return dataSources.prismaDataSource.createSinglePost(args); // Example function to fetch users

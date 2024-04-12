@@ -5,14 +5,15 @@ interface CreateUserProps {
   user: {
     email: string;
     username: string;
-    posts: string[]; // Assuming writtenPosts is an array of post IDs
+    password: string;
+    posts: CreatePostProps[];
   };
 }
-
 interface CreatePostProps {
   posts: {
     title: string; // Title of the post
     authorId: string; // ID of the author
+    username: string;
   };
 }
 
@@ -24,10 +25,17 @@ interface UpdatePostProps {
 }
 
 export class PrismaDataSource {
-  private prisma: PrismaClient;
+  prisma: any;
+  globalForPrisma = global as unknown as { prisma: PrismaClient };
+  constructor() {
+    this.prisma =
+      this.globalForPrisma.prisma ||
+      new PrismaClient({
+        log: ["query"],
+      });
 
-  constructor(prisma: PrismaClient) {
-    this.prisma = prisma;
+    if (process.env.NODE_ENV !== "production")
+      this.globalForPrisma.prisma = this.prisma;
   }
 
   /****
@@ -41,9 +49,9 @@ export class PrismaDataSource {
    * @param id string input
    * @returns single user that matches id params
    */
-  async getSingleUser(id: string) {
+  async getSingleUser(email: string) {
     try {
-      const user = await this.prisma.user.findFirst({ where: { id } });
+      const user = await this.prisma.user.findFirst({ where: { email } });
       return user || null; // Return null if no user is found
     } catch (error) {
       console.error(error);
@@ -142,7 +150,7 @@ export class PrismaDataSource {
 
   // create single user
   async createSingleUser(args: CreateUserProps) {
-    const { email, posts } = args.user; // Destructure args
+    const { email, password, posts } = args.user; // Destructure args
 
     try {
       // Generate a random username
@@ -151,6 +159,7 @@ export class PrismaDataSource {
       const newUser = {
         username: randomUsername,
         email,
+        password,
         posts,
       };
 
@@ -167,16 +176,17 @@ export class PrismaDataSource {
 
   // create single post by user
   async createSinglePost(args: CreatePostProps) {
-    const { title, authorId } = args.posts; // Destructure args
-
     try {
-      // Create a new user object with the provided arguments
+      const { title, authorId, username } = args.posts;
+
+      // Create a new post object with the provided arguments
       const newPost = {
-        title,
-        authorId,
+        title: title,
+        authorId: authorId,
+        username: username,
       };
 
-      // Use the Prisma `create` method to create a new user
+      // Use the Prisma `create` method to create a new post
       const post = await this.prisma.post.create({ data: newPost });
       return post;
     } catch (error) {

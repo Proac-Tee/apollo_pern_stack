@@ -1,5 +1,9 @@
+import { useMutation } from "@apollo/client";
 import React, { FC, useState } from "react";
 import { Button, Form } from "react-bootstrap";
+import { ADD_USER } from "../Graphql/Mutation";
+import toast from "react-hot-toast";
+import { supabase } from "../supabase/superbaseClient";
 
 type FormData = {
   email: string;
@@ -7,9 +11,13 @@ type FormData = {
   confirmPassword: string;
 };
 
+interface LoginOutProps {
+  handleCloseGetStartedModal: () => void; // Define the prop
+}
+
 type ValidatedData = Omit<FormData, "confirmPassword">;
 
-const SignUpForm: FC = () => {
+const SignUpForm: FC<LoginOutProps> = ({ handleCloseGetStartedModal }) => {
   const [validated, setValidated] = useState<boolean>(false);
   const [formData, setFormData] = useState<FormData>({
     email: "",
@@ -17,35 +25,80 @@ const SignUpForm: FC = () => {
     confirmPassword: "",
   });
 
-  let data: ValidatedData = {
+  let userData: ValidatedData = {
     email: "",
     password: "",
   };
+
+  // delete mutation
+  const [
+    addNewUser,
+    { data: sucessData, loading: logingLodaing, error: LoginError },
+  ] = useMutation(ADD_USER);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     event.stopPropagation();
 
-    const form = event.currentTarget;
-    if (
-      !form.checkValidity() ||
-      formData.password !== formData.confirmPassword
-    ) {
-      setValidated(true);
-      return;
+    try {
+      const form = event.currentTarget;
+      if (
+        !form.checkValidity() ||
+        formData.password !== formData.confirmPassword
+      ) {
+        setValidated(true);
+        return;
+      }
+
+      if (userData) {
+        userData = {
+          email: formData.email,
+          password: formData.password,
+        };
+
+        const { data, error } = await supabase.auth.signUp({
+          email: userData.email,
+          password: userData.password,
+          options: {
+            emailRedirectTo: "http://localhost:5173/",
+          },
+        });
+
+        if (data) {
+          await addNewUser({
+            variables: { user: userData },
+          });
+
+          if (error) {
+            toast.error(error.message);
+
+            throw new Error("Error Signin up");
+          }
+
+          if (sucessData) {
+            toast.success(
+              "A verification email has been sent to you click to verify"
+            );
+          }
+        }
+      }
+
+      if (LoginError) {
+        toast.error(LoginError.message);
+        throw new Error("Error Signin up");
+      }
+
+      toast.success("Registered Sucessfully");
+
+      handleCloseGetStartedModal();
+    } catch (error) {
+      toast.error("Error Sigining up");
     }
-
-    data = {
-      email: formData.email,
-      password: formData.password,
-    };
-
-    console.log(data);
   };
 
   return (
@@ -101,7 +154,7 @@ const SignUpForm: FC = () => {
           </Form.Control.Feedback>
         </Form.Group>
 
-        <Button variant="primary" type="submit">
+        <Button disabled={logingLodaing} variant="primary" type="submit">
           Submit
         </Button>
       </Form>

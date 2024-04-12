@@ -15,6 +15,7 @@ type User {
   username: String!   # Username of the user
   role: Role!         # Role of the user
   posts: [Post!]      # Posts written by the user (optional)
+  password: String!
 }
 
 # Define the Post type, representing a post in the system
@@ -24,6 +25,7 @@ type Post {
   createdAt: String!  # Date and time when the post was created (formatted as string)
   updatedAt: String  # Date and time when the post was last updated (formatted as string)
   authorId: String!
+  username: String!
 }
 
 # Define the Role enum, representing different roles a user can have
@@ -36,7 +38,7 @@ enum Role {
 # The "Query" type lists all available queries that clients can execute
 # along with the return type for each.
 type Query {
-  user(id: ID!): User          # Fetch a user by ID
+  user(email: String!): User          # Fetch a user by ID
   users: [User!]               # Fetch all users
   post(id: ID!): Post           # Fetch a post by ID
   posts: [Post!]               # Fetch all posts
@@ -54,13 +56,17 @@ type Mutation {
 
 input AddNewUserInput {
   email: String!      # Email address of the user
-  username: String!   # Username of the user
+  username: String   # Username of the user
   posts: [String!]      # Posts written by the user (optional)
+  password: String!
 }
 
 input AddUserPostInput {
   title: String!      # Title of the post
   authorId: String!       # Author of the post
+  username: String!   # Username of the user
+
+
 }
 
 input UpdateUserPost {

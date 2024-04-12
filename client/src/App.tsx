@@ -6,6 +6,7 @@ import Header from "./components/Header";
 import Dashbord from "./components/Dashbord";
 import SignUpForm from "./components/SignUpForm";
 import LoginForm from "./components/LoginForm";
+import { Toaster } from "react-hot-toast";
 
 const App: React.FC = () => {
   const [showLoginModal, setShowLoginModal] = useState<boolean>(false);
@@ -26,31 +27,35 @@ const App: React.FC = () => {
   };
 
   return (
-    <section className="home">
-      <Header
-        handleShowLoginModal={handleShowLoginModal}
-        handleShowGetStartedModal={handleShowGetStartedModal}
-      />
-      <Dashbord />
+    <>
+      <Toaster position="top-center" />
 
-      <Modal centered show={showLoginModal} onHide={handleCloseLoginModal}>
-        <Modal.Header closeButton>
-          <Modal.Title>Login</Modal.Title>
-        </Modal.Header>
-        <LoginForm />
-      </Modal>
+      <section className="home">
+        <Header
+          handleShowLoginModal={handleShowLoginModal}
+          handleShowGetStartedModal={handleShowGetStartedModal}
+        />
+        <Dashbord />
 
-      <Modal
-        centered
-        show={showGetStartedModal}
-        onHide={handleCloseGetStartedModal}
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>Get Started</Modal.Title>
-        </Modal.Header>
-        <SignUpForm />
-      </Modal>
-    </section>
+        <Modal centered show={showLoginModal} onHide={handleCloseLoginModal}>
+          <Modal.Header closeButton>
+            <Modal.Title>Login</Modal.Title>
+          </Modal.Header>
+          <LoginForm handleCloseLoginModal={handleCloseLoginModal} />
+        </Modal>
+
+        <Modal
+          centered
+          show={showGetStartedModal}
+          onHide={handleCloseGetStartedModal}
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>Get Started</Modal.Title>
+          </Modal.Header>
+          <SignUpForm handleCloseGetStartedModal={handleCloseGetStartedModal} />
+        </Modal>
+      </section>
+    </>
   );
 };
 

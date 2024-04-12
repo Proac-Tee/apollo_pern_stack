@@ -19,6 +19,7 @@ model User {
   email    String @unique
   role     Role   @default(BASIC)
   posts    Post[] @relation("posts")
+  password String
 
   @@unique([username])
   @@index([email])
@@ -31,6 +32,7 @@ model Post {
   UpdatedAt DateTime @updatedAt
   author    User     @relation("posts", fields: [authorId], references: [id])
   authorId  String
+  username  String
 }
 
 enum Role {

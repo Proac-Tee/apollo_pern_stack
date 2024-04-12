@@ -9,6 +9,21 @@
   padding: 1rem;
 }
 
+/* For WebKit based browsers (such as Chrome, Safari) */
+::-webkit-scrollbar {
+  width: 2px; /* Set your desired width */
+}
+
+/* Optional: You can also style the scrollbar track and thumb */
+::-webkit-scrollbar-track {
+  background-color: #fff; /* Change to your preferred color */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #888; /* Change to your preferred color */
+  border-radius: 5px; /* Optional: Round the scrollbar thumb */
+}
+
 header {
   display: flex;
   padding: 2rem;
@@ -31,6 +46,19 @@ header {
   }
 }
 
+.call_to_action {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  p {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #0056b3;
+    text-align: center;
+    padding: 1rem;
+  }
+}
+
 .userListing_section {
   max-width: 1400px;
   margin: auto;
@@ -39,15 +67,9 @@ header {
   position: relative;
 }
 
-.userListings {
-  display: grid;
-  grid-template-columns: repeat(
-    auto-fit,
-    minmax(250px, 1fr)
-  ); /* Adjust the minimum width as needed */
-  gap: 2rem;
-  padding: 0.5rem;
-  margin: auto;
+.listing-table {
+  height: 70vh;
+  overflow: scroll;
 }
 
 .card-call-to-action {
@@ -73,4 +95,24 @@ header {
 
 .buttonChat:hover {
   background-color: #0056b3; /* Darker blue on hover */
+}
+
+.logout_button_style {
+  border: none;
+  font: 600;
+  background-color: transparent;
+}
+
+.mobile_dropdown {
+  display: none;
+}
+
+@media (max-width: 650px) {
+  .desktop_dropdown {
+    display: none;
+  }
+
+  .mobile_dropdown {
+    display: block;
+  }
 }
