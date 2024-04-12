@@ -3,7 +3,6 @@ import { ApolloServer } from "@apollo/server";
 import { startStandaloneServer } from "@apollo/server/standalone";
 import { typeDefs } from "./schema/schema";
 import { PrismaDataSource } from "./datasources/prisma-database";
-import { PrismaClient } from "@prisma/client";
 
 async function startApolloServer() {
   const server = new ApolloServer({
