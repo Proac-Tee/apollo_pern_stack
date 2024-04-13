@@ -62,11 +62,21 @@ const Header: FC<HeaderProps> = ({
           </Dropdown.Toggle>
 
           <Dropdown.Menu>
-            <Dropdown.Item onClick={handleShowLoginModal}>Login</Dropdown.Item>
-            <Dropdown.Item onClick={handleShowGetStartedModal}>
-              Get started
-            </Dropdown.Item>
-            <Dropdown.Item onClick={signOut}>Logout</Dropdown.Item>
+            {!user && (
+              <>
+                <Dropdown.Item onClick={handleShowLoginModal}>
+                  Login
+                </Dropdown.Item>
+                <Dropdown.Item onClick={handleShowGetStartedModal}>
+                  Get started
+                </Dropdown.Item>
+              </>
+            )}
+            {user && (
+              <>
+                <Dropdown.Item onClick={signOut}>Logout</Dropdown.Item>
+              </>
+            )}
           </Dropdown.Menu>
         </Dropdown>
       </div>
