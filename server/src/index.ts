@@ -37,7 +37,11 @@ async function startApolloServer() {
 
   const PORT = process.env.PORT || 4000; // You can change the port as needed
   app.listen(PORT, () => {
-    console.log(`Server running on ${PORT}`);
+    console.log(`
+      🚀  Server is running
+      🔉  Listening on port ${PORT}
+      📭  Query at 
+    `);
   });
 }
 
