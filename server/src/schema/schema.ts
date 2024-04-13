@@ -23,7 +23,7 @@ type Post {
   id: ID!             # Unique identifier for the post
   title: String!      # Title of the post
   createdAt: String!  # Date and time when the post was created (formatted as string)
-  updatedAt: String  # Date and time when the post was last updated (formatted as string)
+  updatedAt: String!  # Date and time when the post was last updated (formatted as string)
   authorId: String!
   username: String!
 }

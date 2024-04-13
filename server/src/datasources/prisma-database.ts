@@ -28,7 +28,11 @@ export class PrismaDataSource {
   prisma: any;
   globalForPrisma = global as unknown as { prisma: PrismaClient };
   constructor() {
-    this.prisma = this.globalForPrisma.prisma || new PrismaClient();
+    this.prisma =
+      this.globalForPrisma.prisma ||
+      new PrismaClient({
+        log: ["query"],
+      });
 
     if (process.env.NODE_ENV !== "production")
       this.globalForPrisma.prisma = this.prisma;

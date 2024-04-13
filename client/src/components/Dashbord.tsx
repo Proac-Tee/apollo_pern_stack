@@ -458,7 +458,7 @@ const Dashbord: FC = () => {
                           >
                             Update
                           </Dropdown.Item>
-                          <Dropdown.Item
+                          {/* <Dropdown.Item
                             onClick={() =>
                               handleItemClick(
                                 "See all posts of this author",
@@ -468,7 +468,7 @@ const Dashbord: FC = () => {
                             }
                           >
                             See all posts of this author
-                          </Dropdown.Item>
+                          </Dropdown.Item> */}
                         </Dropdown.Menu>
                       </Dropdown>
                     </td>
