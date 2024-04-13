@@ -40,10 +40,11 @@ const CustomToggle = React.forwardRef<
   </a>
 ));
 
-interface NewPost {
-  id: string;
-  title: string;
-  username: string;
+interface UserData {
+  user: {
+    id: string;
+    username: string;
+  };
 }
 
 interface Post {
@@ -173,8 +174,7 @@ const Dashbord: FC = () => {
   );
   const [userId, setUserId] = useState<string>("");
   const [currentUser, setCurrentUser] = useState<string | undefined>("");
-  const [userData, setUserData] = useState({});
-
+  const [userData, setUserData] = useState<UserData | null>(null);
   const handleCloseModal = () => {
     setShowModal(false);
   };
@@ -355,12 +355,6 @@ const Dashbord: FC = () => {
     }
   }, [postsData, user, userProfileData]);
 
-  let newPost: NewPost = {
-    authorId: "",
-    title: "",
-    username: "",
-  };
-
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
@@ -372,8 +366,9 @@ const Dashbord: FC = () => {
           throw new Error("Message cannot be empty");
         }
 
-        if (userData) {
-          newPost = {
+        // Assuming userData is of type UserData or possibly null/undefined
+        if (userData && userData.user) {
+          const newPost = {
             authorId: userData.user.id,
             title: chatMessageValue,
             username: userData.user.username,
@@ -382,7 +377,7 @@ const Dashbord: FC = () => {
           await addPost({ variables: { posts: newPost } });
 
           // After adding the post, update the state with the new post
-          setPostData((prevData) => [...prevData, newPost]);
+          setPostData((prevData: any) => [...prevData, newPost]);
 
           toast.success("message sent");
         }

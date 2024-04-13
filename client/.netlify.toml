@@ -1,0 +1,22 @@
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+
+
+[[headers]]
+  for = "/*"
+    [headers.defaults]
+    Access-Control-Allow-Origin = "*"
+
+[[headers]]
+  for = "/*.html"
+    [headers.defaults]
+    Cache-Control = "no-store, must-revalidate"
+
+[[redirects]]
+  from = "/*/  "
+  to = "/:splat"
+  status = 301
+  force = true
