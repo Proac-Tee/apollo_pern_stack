@@ -6,7 +6,7 @@ import "./index.css";
 import { AuthProvider } from "./supabase/AuthProvider.tsx";
 
 const client = new ApolloClient({
-  uri: "http://localhost:4000/",
+  uri: import.meta.env.VITE_REACT_APP_APOLLO_BACKEND,
   cache: new InMemoryCache(),
 });
 

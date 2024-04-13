@@ -1,7 +1,6 @@
 import cors from "cors";
 import { resolvers } from "./resolvers";
 import { ApolloServer } from "@apollo/server";
-import { startStandaloneServer } from "@apollo/server/standalone";
 import { typeDefs } from "./schema/schema";
 import { PrismaDataSource } from "./datasources/prisma-database";
 import { expressMiddleware } from "@apollo/server/express4";
