@@ -3,7 +3,9 @@
 To run this server locslly, you will need to add the following environment variables to your .env file. rename the envExample as .env
 
 `VITE_REACT_APP_SUPABASE_URL=---SUPABASE_URL---`
+
 `VITE_REACT_APP_APOLLO_BACKEND=---URI OF WHERE FRONTEND IS HOSTEAD---`
+
 `VITE_REACT_APP_SUPABASE_ANNON=---SUPABASE_ANNON---`
 
 ## Run Locally
