@@ -28,16 +28,20 @@ _Backend_
 [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 
 _Database_
+
 [![Supabase](https://img.shields.io/badge/Supabase-6534FF?style=for-the-badge&logo=supabase&logoColor=white)](https://supabase.io/)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-336791?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
 
 _Authentication_
+
 [![Supabase](https://img.shields.io/badge/Supabase-6534FF?style=for-the-badge&logo=supabase&logoColor=white)](https://supabase.io/)
 
 _ORM_
+
 [![Prisma](https://img.shields.io/badge/Prisma-2D3748?style=for-the-badge&logo=prisma&logoColor=white)](https://www.prisma.io/)
 
 _Frontend_
+
 [![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=white)](https://reactjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Apollo Client](https://img.shields.io/badge/Apollo_Client-311C87?style=for-the-badge&logo=apollo-graphql&logoColor=white)](https://www.apollographql.com/docs/react/)
@@ -251,5 +255,60 @@ mutation AddPost($posts: AddUserPostInput!) {
     }
   }
 }
+
+```
+
+### File structure of important files
+
+```sh
+- Root Directory
+  - client
+    - public
+      - index.html
+    - src
+      - Graphql
+        - Mutation.ts
+        - Query.ts
+      - assets
+      - components
+        - Dashboard.tsx
+        - Header.tsx
+        - LoginForm.tsx
+        - SignUpForm.tsx
+      - supabase
+        - AuthProvider.tsx
+        - supabaseClient.ts
+      - App.css
+      - App.tsx
+      - index.css
+      - main.tsx
+      - vite-env.d.ts
+    .eslintrc.cjs
+    .gitignore
+    .netlify.toml
+    README.md
+    package-lock.json
+    package.json
+    tsconfig.json
+    tsconfig.node.json
+    vite.config.ts
+  - server
+    - prisma
+      - migrations
+      - schema.prisma
+    - src
+      - datasources
+        - datasources.ts
+      - schema
+        - schema.ts
+      - graphql.d.ts
+      - index.ts
+      - resolvers.ts
+    .gitattributes
+    .gitignore
+    apollo.config.ts
+    package-lock.json
+    package.json
+    tsconfig.json
 
 ```
