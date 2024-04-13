@@ -52,7 +52,7 @@ interface Post {
   createdAt: string;
   id: string;
   title: string;
-  updatedAt: string;
+  UpdatedAt: string;
   username: string;
 }
 
@@ -60,7 +60,7 @@ interface UpdatePostData {
   updatePost: {
     id: string;
     title: string;
-    updatedAt: string;
+    UpdatedAt: string;
   };
 }
 
@@ -115,7 +115,12 @@ const UpdatePostModal = ({
         <Modal.Title>Update Post</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <input type="text" value={upateTitle} onChange={handleTitleChange} />
+        <input
+          className="update-field"
+          type="text"
+          value={upateTitle}
+          onChange={handleTitleChange}
+        />
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={onClose}>
@@ -296,8 +301,6 @@ const Dashbord: FC = () => {
 
         const updatedPost = rawPost.updatePost;
 
-        toast.success("Successfully updated Message");
-
         if (updatedPost) {
           // Update the postData state with the updated title and updatedAt
           setPostData((prevData) =>
@@ -306,7 +309,7 @@ const Dashbord: FC = () => {
                 ? {
                     ...post,
                     title: updatedPost.title,
-                    updatedAt: updatedPost.updatedAt,
+                    UpdatedAt: updatedPost.UpdatedAt,
                   }
                 : post
             )
@@ -318,6 +321,8 @@ const Dashbord: FC = () => {
           throw new Error("An error occured");
         }
       }
+
+      toast.success("Successfully updated Message");
     } catch (error) {
       toast.error("An error occured");
     } finally {
@@ -432,7 +437,7 @@ const Dashbord: FC = () => {
                   <td>{post.username}</td>
                   <td>{formatDate(post.createdAt)}</td>
                   <td>{post.title}</td>
-                  <td>{formatDate(post.updatedAt)}</td>
+                  <td>{formatDate(post.UpdatedAt)}</td>
                   {username === post.username ? (
                     <td>
                       <Dropdown>

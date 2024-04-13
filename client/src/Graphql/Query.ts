@@ -7,7 +7,7 @@ export const GET_POSTS = gql`
       createdAt
       id
       title
-      updatedAt
+      UpdatedAt
       username
     }
   }
@@ -30,7 +30,7 @@ export const GET_SINGLE_POST = gql`
       createdAt
       id
       title
-      updatedAt
+      UpdatedAt
       username
     }
   }
@@ -43,7 +43,7 @@ export const GET_SINGLE_USER_POST = gql`
         createdAt
         id
         title
-        updatedAt
+        UpdatedAt
         username
       }
     }

@@ -72,6 +72,22 @@ header {
   overflow: scroll;
 }
 
+.update-field {
+  width: 100%;
+  border: 1px solid gray;
+  font-size: 16px;
+  padding: 0.5rem;
+  border-radius: 0.75rem;
+}
+
+.update-field:focus {
+  outline: none;
+}
+
+.update-field:hover {
+  border: 1px solid green;
+}
+
 .card-call-to-action {
   display: flex;
   gap: 1rem;
@@ -108,6 +124,9 @@ header {
 }
 
 @media (max-width: 650px) {
+  header {
+    padding: 1rem;
+  }
   .desktop_dropdown {
     display: none;
   }

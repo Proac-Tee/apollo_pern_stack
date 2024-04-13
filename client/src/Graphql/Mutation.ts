@@ -9,7 +9,7 @@ export const ADD_POST = gql`
       id
       title
       username
-      updatedAt
+      UpdatedAt
     }
   }
 `;
@@ -40,7 +40,7 @@ export const UPDATE_POST = gql`
   mutation UpdatePost($posts: UpdateUserPost!) {
     updatePost(posts: $posts) {
       title
-      updatedAt
+      UpdatedAt
       id
     }
   }
