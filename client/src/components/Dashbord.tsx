@@ -235,8 +235,10 @@ const Dashbord: FC = () => {
   });
 
   // post mutation
-  const [addPost, { loading: postLoading, error: postError }] =
-    useMutation(ADD_POST);
+  const [
+    addPost,
+    { data: postDataResponse, loading: postLoading, error: postError },
+  ] = useMutation(ADD_POST);
 
   // delete mutation
   const [deletePost, { loading: deleteLoading, error: deleteError }] =
@@ -379,10 +381,15 @@ const Dashbord: FC = () => {
             username: userData.user.username,
           };
 
-          await addPost({ variables: { posts: newPost } });
+          await addPost({
+            variables: { posts: newPost },
+          });
 
           // After adding the post, update the state with the new post
-          setPostData((prevData: any) => [...prevData, newPost]);
+          setPostData((prevData: any) => [
+            ...prevData,
+            postDataResponse.addPost,
+          ]);
 
           toast.success("message sent");
         }
